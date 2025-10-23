@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Módulo I: Aspectos Generales de Inteligencia de Negocios - Curso interactivo completo">
+    <meta name="author" content="Johan Tapia">
+    <title>Módulo I: Aspectos Generales de Inteligencia de Negocios</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* --- 1. Variables Globales y Estilos Base --- */
+        :root {
+            --color-primario: #2c3e50;
+            --color-secundario: #34495e;
+            --color-acento: #00bfa5;
+            --color-acento-oscuro: #008f7a;
+            --color-fondo: #f8f9fa;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --fuente-titulo: 'Montserrat', sans-serif;
+            --fuente-cuerpo: 'Lato', sans-serif;
+            --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --sombra-media: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --radio-borde: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--fuente-cuerpo);
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        h1, h2, h3, h4 {
+            font-family: var(--fuente-titulo);
+            color: var(--color-primario);
+            margin-bottom: 1.25rem;
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; border-bottom: 4px solid var(--color-acento); padding-bottom: 10px; display: inline-block; }
+        h3 { font-size: 1.5rem; color: var(--color-secundario); margin-top: 2rem; }
+        h4 { font-size: 1.2rem; color: var(--color-secundario); margin-bottom: 0.5rem; margin-top: 1.5rem; }
+
+        p { margin-bottom: 1rem; font-size: 1.05rem; }
+        ul, ol { padding-left: 25px; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+        strong { font-weight: 700; color: var(--color-primario); }
+
+        /* --- 2. Header y Navegación --- */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            padding: 1rem 0;
+            box-shadow: var(--sombra-suave);
+        }
+        .header .container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap; 
+        }
+        .logo { 
+            font-family: var(--fuente-titulo); 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            color: var(--color-primario); 
+            text-decoration: none; 
+            display: flex;
+            align-items: center;
+        }
+        .logo i { color: var(--color-acento); margin-right: 8px; }
+        
+        /* Botón hamburguesa */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--color-primario);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .main-nav ul { 
+            display: flex; 
+            list-style: none; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .main-nav li { margin-left: 1.5rem; }
+        .main-nav a {
+            text-decoration: none; 
+            color: var(--color-secundario); 
+            font-weight: 700;
+            font-size: 0.95rem; 
+            padding: 8px 0; 
+            position: relative; 
+            transition: color 0.3s ease;
+            display: block;
+        }
+        .main-nav a::after {
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 0; 
+            height: 3px;
+            background-color: var(--color-acento); 
+            transition: width 0.3s ease;
+        }
+        .main-nav a:hover, .main-nav a.active { color: var(--color-primario); }
+        .main-nav a:hover::after, .main-nav a.active::after { width: 100%; }
+
+        /* --- 3. Hero Section --- */
+        .hero-section {
+            background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            color: var(--color-blanco); 
+            min-height: 60vh; 
+            display: flex; 
+            align-items: center; 
+            padding: 4rem 0;
+        }
+        .hero-section h1 { 
+            color: var(--color-blanco); 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+        }
+        .hero-section p { 
+            font-size: 1.3rem; 
+            opacity: 0.9; 
+            max-width: 700px; 
+        }
+        .hero-section .author-info {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+        .hero-section .author-info p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .hero-section .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .hero-section .social-links a {
+            color: var(--color-blanco);
+            font-size: 1.8rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+            display: inline-block;
+        }
+        .hero-section .social-links a:hover {
+            transform: scale(1.2);
+            color: var(--color-acento);
+        }
+        
+        .btn-primary {
+            display: inline-block; 
+            background: var(--color-acento); 
+            color: var(--color-primario);
+            padding: 15px 30px; 
+            border-radius: var(--radio-borde); 
+            text-decoration: none;
+            font-family: var(--fuente-titulo); 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            margin-top: 1.5rem; 
+            transition: all 0.3s ease; 
+            border: none; 
+            cursor: pointer;
+        }
+        .btn-primary:hover { 
+            background-color: var(--color-blanco); 
+            transform: translateY(-3px); 
+            box-shadow: var(--sombra-media); 
+        }
+
+        /* --- 4. Secciones Generales --- */
+        .section { padding: 80px 0; background-color: var(--color-blanco); }
+        .section.bg-light { background-color: var(--color-fondo); }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header p { font-size: 1.2rem; color: #555; max-width: 700px; margin: 0 auto; }
+
+        /* --- 5. Tarjetas de Contenido --- */
+        .content-card {
+             background: var(--color-blanco);
+             padding: 2.5rem;
+             border-radius: var(--radio-borde);
+             box-shadow: var(--sombra-suave);
+             margin-bottom: 2rem;
+             border-left: 5px solid var(--color-acento);
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--sombra-media);
+        }
+
+        /* --- 6. Elementos Específicos --- */
+        .video-container {
+            position: relative; 
+            overflow: hidden; 
+            width: 100%;
+            padding-top: 56.25%; 
+            margin-bottom: 1rem;
+            border-radius: 8px; 
+            box-shadow: var(--sombra-suave);
+        }
+        .video-container iframe {
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            bottom: 0; 
+            right: 0;
+            width: 100%; 
+            height: 100%;
+            border: none;
+        }
+
+        /* Tablas Responsivas */
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--sombra-suave);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--color-blanco);
+        }
+        th {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Bloques de Código */
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Destacados y Alertas */
+        .highlight-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            border-left: 5px solid var(--color-acento);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        .highlight-box i {
+            color: var(--color-acento);
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin: 1rem 0;
+        }
+
+        /* --- 7. Quiz Interactivo --- */
+        .quiz-container {
+            background: var(--color-blanco);
+            padding: 2.5rem;
+            border-radius: var(--radio-borde);
+            box-shadow: var(--sombra-media);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .quiz-progress {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .quiz-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-acento) 0%, var(--color-acento-oscuro) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-primario);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .option-btn {
+            background: var(--color-fondo);
+            border: 2px solid #e0e0e0;
+            padding: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1rem;
+            font-family: var(--fuente-cuerpo);
+            color: var(--color-texto);
+            width: 100%;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #e8f5e9;
+            border-color: var(--color-acento);
+            transform: translateX(5px);
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .option-btn.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        .option-btn.wrong {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .quiz-feedback {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        .quiz-feedback i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        .quiz-results {
+            text-align: center;
+            padding: 2rem;
+        }
+        .quiz-results h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-acento);
+        }
+        .quiz-results p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .btn-next, .btn-restart {
+            background: var(--color-acento);
+            color: var(--color-blanco);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-next:hover, .btn-restart:hover {
+            background: var(--color-acento-oscuro);
+            transform: translateY(-2px);
+            box-shadow: var(--sombra-suave);
+        }
+
+        /* --- 8. Gráficos --- */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+            background: var(--color-blanco);
+            padding: 1.5rem;
+            border-radius: var(--radio-borde);
+            box-shadow: var(--sombra-suave);
+        }
+
+        /* --- 9. Footer --- */
+        .footer {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            padding: 3rem 0 1.5rem;
+            text-align: center;
+        }
+        .footer p {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+        .footer a {
+            color: var(--color-acento);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: var(--color-blanco);
+        }
+        .footer .social-links {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .footer .social-links a {
+            font-size: 1.8rem;
+            color: var(--color-blanco);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .footer .social-links a:hover {
+            transform: scale(1.2);
+            color: var(--color-acento);
+        }
+
+        /* --- 10. Botón Scroll to Top --- */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--color-acento);
+            color: var(--color-blanco);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--sombra-media);
+            z-index: 999;
+        }
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-to-top:hover {
+            background: var(--color-acento-oscuro);
+            transform: translateY(-5px);
+        }
+
+        /* --- 11. Responsive Design --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.7rem; }
+            h3 { font-size: 1.3rem; }
+            
+            .hero-section {
+                min-height: auto;
+                padding: 3rem 0;
+            }
+            .hero-section h1 { font-size: 2rem; }
+            .hero-section p { font-size: 1.1rem; }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--color-blanco);
+                box-shadow: var(--sombra-media);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            .main-nav.active {
+                max-height: 500px;
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            
+            .main-nav li {
+                margin: 0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .main-nav a {
+                padding: 1rem 1.5rem;
+            }
+            
+            .section { padding: 50px 0; }
+            .content-card { padding: 1.5rem; }
+            
+            .chart-container {
+                height: 300px;
+            }
+            
+            .quiz-question {
+                font-size: 1.1rem;
+            }
+            
+            .scroll-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .hero-section .social-links a {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 { font-size: 1.7rem; }
+            h2 { font-size: 1.5rem; }
+            
+            .hero-section h1 { font-size: 1.7rem; }
+            .hero-section p { font-size: 1rem; }
+            
+            .content-card {
+                padding: 1.2rem;
+            }
+            
+            .btn-primary {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* --- 12. Animaciones personalizadas --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* --- 13. Mejoras de accesibilidad --- */
+        :focus-visible {
+            outline: 3px solid var(--color-acento);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="#bienvenida" class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <span>Inteligencia de Negocios</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <nav class="main-nav" id="mainNav" role="navigation">
+                <ul>
+                    <li><a href="#bienvenida" class="active">Inicio</a></li>
+                    <li><a href="#que-es-bi">¿Qué es BI?</a></li>
+                    <li><a href="#beneficios">Beneficios</a></li>
+                    <li><a href="#metodologias">Metodologías</a></li>
+                    <li><a href="#tecnologias">Tecnologías</a></li>
+                    <li><a href="#quiz">Quiz</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="bienvenida" class="hero-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h1>MÓDULO I: ASPECTOS GENERALES DE INTELIGENCIA DE NEGOCIOS</h1>
+                <p>Descubre cómo transformar datos en decisiones estratégicas mediante Business Intelligence. Un recorrido completo por conceptos, metodologías y tecnologías que están revolucionando el mundo empresarial.</p>
+                <a href="#que-es-bi" class="btn-primary">Comenzar el Aprendizaje</a>
+                
+                <div class="author-info">
+                    <p><strong>Creado por:</strong> Johan Tapia</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/johan-tapia-192183281/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Johan Tapia" title="Visita mi LinkedIn">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/johantapia" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Johan Tapia" title="Visita mi GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="mailto:contacto@johantapia.com" aria-label="Enviar correo a Johan Tapia" title="Envíame un correo">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: ¿Qué es BI? -->
+    <section id="que-es-bi" class="section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>TEMA 1: ¿Qué es la Inteligencia de Negocios?</h2>
+                <p>Fundamentos y conceptos clave de Business Intelligence</p>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="100">
+                <h3><i class="fa-solid fa-lightbulb"></i> Definición Conceptual</h3>
+                <p>La <strong>Inteligencia de Negocios (Business Intelligence - BI)</strong> es un conjunto de estrategias, aplicaciones, datos, productos, tecnologías y arquitectura técnica que están enfocados en la administración y creación de conocimiento a través del análisis de datos existentes en una organización o empresa.</p>
+                
+                <div class="highlight-box">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <strong>Definición técnica (Gartner):</strong> "BI es un término paraguas que incluye las aplicaciones, infraestructura, herramientas y mejores prácticas que permiten el acceso y análisis de información para mejorar y optimizar decisiones y desempeño."
+                </div>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+                <h3><i class="fa-solid fa-puzzle-piece"></i> Componentes Fundamentales de BI</h3>
+                <ol>
+                    <li><strong>Datos:</strong> Materia prima proveniente de múltiples fuentes (bases de datos, sistemas ERP, CRM, redes sociales, IoT)</li>
+                    <li><strong>Tecnología:</strong> Herramientas de extracción, transformación y carga (ETL) para integrar y preparar datos</li>
+                    <li><strong>Análisis:</strong> Procesamiento y modelado de datos mediante técnicas estadísticas y de minería de datos</li>
+                    <li><strong>Visualización:</strong> Dashboards, reportes y gráficos interactivos que facilitan la comprensión</li>
+                    <li><strong>Acción:</strong> Toma de decisiones basada en insights y hallazgos del análisis</li>
+                </ol>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="300">
+                <h3><i class="fa-solid fa-diagram-project"></i> Arquitectura Básica de un Sistema BI</h3>
+                <div class="code-block">
+[Fuentes de Datos] → [ETL] → [Data Warehouse] → [OLAP/Analytics] → [Visualización] → [Usuarios]
+                </div>
+                <p><strong>Flujo de información:</strong></p>
+                <ul>
+                    <li><strong>Fuentes de Datos:</strong> Sistemas transaccionales, archivos, APIs, sensores</li>
+                    <li><strong>ETL (Extract, Transform, Load):</strong> Procesos que limpian y estructuran los datos</li>
+                    <li><strong>Data Warehouse:</strong> Almacén centralizado optimizado para análisis</li>
+                    <li><strong>OLAP:</strong> Análisis multidimensional de datos (cubos OLAP)</li>
+                    <li><strong>Capa de Presentación:</strong> Herramientas de visualización y reporteo</li>
+                </ul>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="400">
+                <h3><i class="fa-solid fa-building"></i> Ejemplos Prácticos por Industria</h3>
+                
+                <h4>Ejemplo 1: Retail</h4>
+                <p>Una cadena de supermercados utiliza BI para:</p>
+                <ul>
+                    <li>Analizar patrones de compra por horario y temporada</li>
+                    <li>Optimizar inventarios evitando sobre-stock o faltantes</li>
+                    <li>Personalizar ofertas según el comportamiento del cliente</li>
+                    <li><strong>Resultado:</strong> Aumento del 15% en ventas y reducción del 20% en merma</li>
+                </ul>
+
+                <h4>Ejemplo 2: Banca</h4>
+                <p>Un banco implementa BI para:</p>
+                <ul>
+                    <li>Detectar transacciones fraudulentas en tiempo real</li>
+                    <li>Segmentar clientes para productos financieros específicos</li>
+                    <li>Predecir riesgo crediticio mediante modelos predictivos</li>
+                    <li><strong>Resultado:</strong> Reducción del 40% en fraudes y mejora en aprobación de créditos</li>
+                </ul>
+
+                <h4>Ejemplo 3: Salud</h4>
+                <p>Un hospital usa BI para:</p>
+                <ul>
+                    <li>Reducir tiempos de espera en emergencias mediante análisis de flujo de pacientes</li>
+                    <li>Optimizar asignación de recursos médicos (personal, quirófanos, equipos)</li>
+                    <li>Predecir readmisiones de pacientes con modelos de machine learning</li>
+                    <li><strong>Resultado:</strong> Mejora del 30% en satisfacción del paciente y reducción de costos operativos</li>
+                </ul>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="500">
+                <h3><i class="fa-solid fa-video"></i> Recursos Complementarios</h3>
+                
+                <h4>📺 Videos Recomendados:</h4>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/qHNsFwbsU_Q" title="What is Business Intelligence - IBM Technology" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+                
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=8V8vx5gY8BY" target="_blank" rel="noopener">Business Intelligence Explained in 5 Minutes</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=VVkBm8hXUVc" target="_blank" rel="noopener">Introducción a Business Intelligence (Español)</a></li>
+                </ul>
+
+                <h4>📄 Documentos y Recursos:</h4>
+                <ul>
+                    <li><a href="https://azure.microsoft.com/en-us/resources/" target="_blank" rel="noopener">Microsoft: "The Modern Data Warehouse"</a></li>
+                    <li><a href="https://www.gartner.com/en/research" target="_blank" rel="noopener">Gartner Research (requiere registro gratuito)</a></li>
+                    <li><a href="https://www.tableau.com/learn/articles/business-intelligence" target="_blank" rel="noopener">"Business Intelligence Guidebook" - Tableau</a></li>
+                </ul>
+
+                <h4>🌐 Páginas Web de Referencia:</h4>
+                <ul>
+                    <li><a href="https://www.ibm.com/topics/business-intelligence" target="_blank" rel="noopener">IBM Business Intelligence</a></li>
+                    <li><a href="https://www.oracle.com/business-analytics/business-intelligence/what-is-business-intelligence/" target="_blank" rel="noopener">Oracle BI Essentials</a></li>
+                    <li><a href="https://en.wikipedia.org/wiki/Business_intelligence" target="_blank" rel="noopener">Wikipedia BI (comprehensive)</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Beneficios de BI -->
+    <section id="beneficios" class="section bg-light">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>TEMA 2: Beneficios de un Sistema de Inteligencia de Negocios</h2>
+                <p>Impacto medible en las organizaciones</p>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="100">
+                <h3><i class="fa-solid fa-rocket"></i> Beneficios Estratégicos</h3>
+                
+                <h4>1. Mejora en la Toma de Decisiones</h4>
+                <ul>
+                    <li>Decisiones basadas en datos reales, no en intuición</li>
+                    <li>Reducción del tiempo de respuesta ante cambios del mercado</li>
+                    <li>Mayor precisión en proyecciones y pronósticos</li>
+                </ul>
+
+                <h4>2. Optimización Operacional</h4>
+                <ul>
+                    <li>Identificación de cuellos de botella en procesos</li>
+                    <li>Reducción de costos operativos (promedio 10-30%)</li>
+                    <li>Mejora en la eficiencia de recursos</li>
+                </ul>
+
+                <h4>3. Ventaja Competitiva</h4>
+                <ul>
+                    <li>Comprensión profunda del mercado y competencia</li>
+                    <li>Anticipación a tendencias</li>
+                    <li>Diferenciación basada en conocimiento del cliente</li>
+                </ul>
+
+                <h4>4. Incremento en Ingresos</h4>
+                <ul>
+                    <li>Identificación de oportunidades de venta cruzada</li>
+                    <li>Retención de clientes mediante análisis predictivo</li>
+                    <li>Optimización de precios dinámicos</li>
+                </ul>
+
+                <h4>5. Visibilidad y Transparencia</h4>
+                <ul>
+                    <li>Monitoreo en tiempo real de KPIs</li>
+                    <li>Acceso democratizado a información</li>
+                    <li>Alineación entre departamentos</li>
+                </ul>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+                <h3><i class="fa-solid fa-chart-line"></i> Beneficios Cuantificables (Estudios de Caso)</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Mejora Promedio</th>
+                                <th>Fuente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ROI en 3 años</strong></td>
+                                <td>300-400%</td>
+                                <td>Forrester Research</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reducción tiempo en reportes</strong></td>
+                                <td>70%</td>
+                                <td>Aberdeen Group</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mejora en precisión de pronósticos</strong></td>
+                                <td>25-50%</td>
+                                <td>McKinsey</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Aumento en satisfacción del cliente</strong></td>
+                                <td>20-35%</td>
+                                <td>Gartner</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reducción de costos operativos</strong></td>
+                                <td>15-25%</td>
+                                <td>IBM Study</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="chart-container" data-aos="fade-up" data-aos-delay="300">
+                <canvas id="beneficiosChart"></canvas>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="400">
+                <h3><i class="fa-solid fa-trophy"></i> Casos de Éxito Destacados</h3>
+                
+                <h4>Netflix</h4>
+                <p>El gigante del streaming utiliza BI y análisis avanzado para:</p>
+                <ul>
+                    <li>Personalizar recomendaciones de contenido (algoritmo que representa el 80% de las visualizaciones)</li>
+                    <li>Decidir qué series y películas producir basándose en datos de audiencia</li>
+                    <li>Optimizar la calidad de streaming según el ancho de banda del usuario</li>
+                </ul>
+
+                <h4>Amazon</h4>
+                <p>Amazon implementa BI en toda su operación:</p>
+                <ul>
+                    <li>Sistema de recomendación que genera el 35% de sus ventas</li>
+                    <li>Optimización de rutas de entrega y gestión de inventario en tiempo real</li>
+                    <li>Análisis predictivo para anticipar demanda y reducir tiempos de entrega</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Metodologías -->
+    <section id="metodologias" class="section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>TEMA 3: Metodologías de Implementación BI</h2>
+                <p>Frameworks probados para proyectos exitosos</p>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="100">
+                <h3><i class="fa-solid fa-layer-group"></i> Metodología de Kimball</h3>
+                <p><strong>Enfoque:</strong> Bottom-up, orientado a las necesidades del negocio</p>
+                
+                <h4>Fases principales:</h4>
+                <ol>
+                    <li><strong>Planificación del Proyecto:</strong> Definir alcance, objetivos y recursos</li>
+                    <li><strong>Definición de Requerimientos:</strong> Entrevistas con stakeholders y análisis del negocio</li>
+                    <li><strong>Modelado Dimensional:</strong> Diseño de esquemas estrella/copo de nieve</li>
+                    <li><strong>Diseño Físico:</strong> Implementación de bases de datos y ETL</li>
+                    <li><strong>Diseño y Desarrollo de ETL:</strong> Procesos de carga y transformación</li>
+                    <li><strong>Desarrollo de Aplicaciones BI:</strong> Reportes, dashboards y análisis ad-hoc</li>
+                    <li><strong>Despliegue:</strong> Puesta en producción y capacitación</li>
+                    <li><strong>Mantenimiento y Crecimiento:</strong> Monitoreo continuo y evolución</li>
+                </ol>
+
+                <div class="alert-info">
+                    <strong>Ventaja clave:</strong> Resultados rápidos mediante implementación incremental por áreas de negocio.
+                </div>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+                <h3><i class="fa-solid fa-database"></i> Metodología de Inmon</h3>
+                <p><strong>Enfoque:</strong> Top-down, arquitectura empresarial centralizada</p>
+                
+                <h4>Características:</h4>
+                <ul>
+                    <li><strong>Enterprise Data Warehouse (EDW):</strong> Repositorio centralizado normalizado</li>
+                    <li><strong>Data Marts dependientes:</strong> Subconjuntos especializados del EDW</li>
+                    <li><strong>Integración de datos a nivel empresarial</strong> antes de crear soluciones departamentales</li>
+                    <li><strong>Arquitectura más compleja</strong> pero con mayor consistencia a largo plazo</li>
+                </ul>
+
+                <div class="alert-info">
+                    <strong>Ventaja clave:</strong> Mayor consistencia y escalabilidad empresarial a largo plazo.
+                </div>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="300">
+                <h3><i class="fa-solid fa-rotate"></i> Comparación: Kimball vs Inmon</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>Kimball (Bottom-up)</th>
+                                <th>Inmon (Top-down)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Enfoque</strong></td>
+                                <td>Orientado a procesos de negocio</td>
+                                <td>Orientado a datos empresariales</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Implementación</strong></td>
+                                <td>Incremental, por data marts</td>
+                                <td>EDW central, luego data marts</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tiempo al valor</strong></td>
+                                <td>Corto (3-6 meses primeros resultados)</td>
+                                <td>Largo (12-18 meses para EDW completo)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Modelado</strong></td>
+                                <td>Dimensional (estrella/copo de nieve)</td>
+                                <td>Normalizado (3NF), luego dimensional</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mejor para</strong></td>
+                                <td>Proyectos ágiles, necesidades específicas</td>
+                                <td>Visión empresarial, largo plazo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Tecnologías -->
+    <section id="tecnologias" class="section bg-light">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>TEMA 4: Tecnologías y Herramientas BI</h2>
+                <p>El ecosistema tecnológico de Business Intelligence</p>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="100">
+                <h3><i class="fa-solid fa-laptop-code"></i> Principales Plataformas BI</h3>
+                
+                <h4>1. Tableau</h4>
+                <ul>
+                    <li><strong>Fortaleza:</strong> Visualización de datos intuitiva y poderosa</li>
+                    <li><strong>Ideal para:</strong> Análisis exploratorio y storytelling con datos</li>
+                    <li><strong>Modelo:</strong> Licenciamiento por usuario (Desktop, Server, Cloud)</li>
+                </ul>
+
+                <h4>2. Power BI (Microsoft)</h4>
+                <ul>
+                    <li><strong>Fortaleza:</strong> Integración con ecosistema Microsoft, excelente relación precio-valor</li>
+                    <li><strong>Ideal para:</strong> Organizaciones que ya usan Microsoft 365 y Azure</li>
+                    <li><strong>Modelo:</strong> Suscripción mensual desde $10/usuario (Pro) y $20/usuario (Premium)</li>
+                </ul>
+
+                <h4>3. Qlik Sense</h4>
+                <ul>
+                    <li><strong>Fortaleza:</strong> Motor asociativo para análisis de relaciones complejas</li>
+                    <li><strong>Ideal para:</strong> Análisis ad-hoc y descubrimiento de datos</li>
+                    <li><strong>Modelo:</strong> Licenciamiento por usuario y capacidad</li>
+                </ul>
+
+                <h4>4. Looker (Google Cloud)</h4>
+                <ul>
+                    <li><strong>Fortaleza:</strong> Modelado semántico con LookML, arquitectura cloud-native</li>
+                    <li><strong>Ideal para:</strong> Organizaciones data-driven con equipos técnicos fuertes</li>
+                    <li><strong>Modelo:</strong> Basado en consumo de Google Cloud</li>
+                </ul>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+                <h3><i class="fa-solid fa-list-check"></i> Criterios de Selección de Tecnología</h3>
+                <ol>
+                    <li><strong>Facilidad de uso (25%):</strong> Curva de aprendizaje, interfaz intuitiva</li>
+                    <li><strong>Escalabilidad (20%):</strong> Capacidad de crecer con la organización</li>
+                    <li><strong>Integración (20%):</strong> Conectividad con fuentes de datos existentes</li>
+                    <li><strong>Costo Total de Propiedad - TCO (15%):</strong> Licencias, infraestructura, mantenimiento</li>
+                    <li><strong>Soporte y Comunidad (10%):</strong> Documentación, foros, soporte técnico</li>
+                    <li><strong>Capacidades Avanzadas (10%):</strong> Machine Learning, análisis predictivo</li>
+                </ol>
+            </div>
+
+            <div class="chart-container" data-aos="fade-up" data-aos-delay="300">
+                <canvas id="tecnologiaChart"></canvas>
+            </div>
+
+            <div class="content-card" data-aos="fade-up" data-aos-delay="400">
+                <h3><i class="fa-solid fa-dashboard"></i> Ejemplo: Dashboard CFO</h3>
+                <p>Un dashboard típico para el Director Financiero (CFO) incluiría:</p>
+                <ul>
+                    <li><strong>Revenue:</strong> Ingresos actuales vs presupuestados</li>
+                    <li><strong>COGS (Cost of Goods Sold):</strong> Costo de mercancía vendida</li>
+                    <li><strong>OPEX (Operating Expenses):</strong> Gastos operativos</li>
+                    <li><strong>EBITDA:</strong> Beneficio antes de intereses, impuestos, depreciación y amortización</li>
+                    <li><strong>KPIs críticos:</strong> Flujo de caja, días de cobro promedio (DSO), margen bruto</li>
+                </ul>
+
+                <div class="chart-container">
+                    <canvas id="cfoChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Quiz Interactivo -->
+    <section id="quiz" class="section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Quiz de Evaluación</h2>
+                <p>Pon a prueba tus conocimientos sobre Business Intelligence</p>
+            </div>
+
+            <div class="quiz-container" data-aos="fade-up" data-aos-delay="100" id="quiz-container">
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="progressBar"></div>
+                </div>
+
+                <div id="quizQuestionArea">
+                    <p id="questionNumber" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Pregunta 1 de 10</p>
+                    <div class="quiz-question" id="quizQuestion">Cargando pregunta...</div>
+                    <div class="quiz-options" id="quizOptions"></div>
+                    <div class="quiz-feedback" id="quizFeedback"></div>
+                    <button class="btn-next" id="nextBtn" style="display: none;">Siguiente Pregunta</button>
+                </div>
+
+                <div id="quizResults" style="display: none;" class="quiz-results">
+                    <h3 id="quizScore">Tu puntaje</h3>
+                    <p id="quizResultMessage"></p>
+                    <button class="btn-restart" id="restartBtn">Reintentar Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Módulo I: Aspectos Generales de Inteligencia de Negocios</p>
+            <p>Creado por <strong>Johan Tapia</strong></p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/johan-tapia-192183281/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Johan Tapia" title="Visita mi LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/johantapia" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Johan Tapia" title="Visita mi GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="mailto:contacto@johantapia.com" aria-label="Enviar correo a Johan Tapia" title="Envíame un correo">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                Este material es de carácter educativo y se distribuye bajo licencia Creative Commons.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Botón Scroll to Top -->
+    <div class="scroll-to-top" id="scrollToTop" role="button" aria-label="Volver arriba" tabindex="0">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // Inicializar AOS (Animate On Scroll)
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // --- 1. Menú Responsive ---
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        const navLinks = document.querySelectorAll('.main-nav a');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+                const isExpanded = mainNav.classList.contains('active');
+                menuToggle.setAttribute('aria-expanded', isExpanded);
+                
+                // Cambiar icono
+                const icon = menuToggle.querySelector('i');
+                if (icon) {
+                    icon.className = isExpanded ? 'fa-solid fa-times' : 'fa-solid fa-bars';
+                }
+            });
+
+            // Cerrar menú al hacer clic en un enlace
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) icon.className = 'fa-solid fa-bars';
+                    }
+                });
+            });
+        }
+
+        // --- 2. Scroll to Top Button ---
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Accesibilidad del botón con teclado
+        scrollToTopBtn.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // --- 3. Quiz Interactivo ---
+        const quizData = [
+            {
+                question: "¿Cuál es la definición más precisa de Business Intelligence según Gartner?",
+                options: [
+                    "Un software para crear gráficos bonitos",
+                    "Un término paraguas que incluye aplicaciones, infraestructura, herramientas y mejores prácticas para el acceso y análisis de información",
+                    "Una base de datos grande para almacenar información",
+                    "Un sistema de contabilidad automatizado"
+                ],
+                answer: "Un término paraguas que incluye aplicaciones, infraestructura, herramientas y mejores prácticas para el acceso y análisis de información",
+                feedback: "Correcto. Gartner define BI como un término paraguas que abarca múltiples elementos para mejorar decisiones y desempeño."
+            },
+            {
+                question: "¿Cuál NO es un componente fundamental de BI?",
+                options: [
+                    "Datos",
+                    "Análisis",
+                    "Recursos Humanos",
+                    "Visualización"
+                ],
+                answer: "Recursos Humanos",
+                feedback: "Correcto. Los componentes fundamentales de BI son: Datos, Tecnología, Análisis, Visualización y Acción."
+            },
+            {
+                question: "En la arquitectura básica de BI, ¿qué significa ETL?",
+                options: [
+                    "Enterprise Technology Layer",
+                    "Extract, Transform, Load",
+                    "Electronic Transfer Link",
+                    "Enhanced Table Logic"
+                ],
+                answer: "Extract, Transform, Load",
+                feedback: "Correcto. ETL (Extraer, Transformar, Cargar) son los procesos que integran y preparan datos desde múltiples fuentes."
+            },
+            {
+                question: "Según estudios, ¿cuál es el ROI promedio de una implementación BI a 3 años?",
+                options: [
+                    "50-100%",
+                    "150-200%",
+                    "300-400%",
+                    "500-600%"
+                ],
+                answer: "300-400%",
+                feedback: "Correcto. El retorno de inversión promedio de proyectos BI es de aproximadamente 300-400% en un período de 3 años según Forrester Research."
+            },
+            {
+                question: "¿Qué porcentaje de las visualizaciones de Netflix son generadas por su sistema de recomendación basado en BI?",
+                options: [
+                    "40%",
+                    "60%",
+                    "80%",
+                    "95%"
+                ],
+                answer: "80%",
+                feedback: "Correcto. El algoritmo de recomendación de Netflix, basado en análisis de datos, genera aproximadamente el 80% de las visualizaciones."
+            },
+            {
+                question: "¿Cuál es la principal diferencia entre la metodología de Kimball y la de Inmon?",
+                options: [
+                    "Kimball usa SQL y Inmon usa NoSQL",
+                    "Kimball es bottom-up (orientado a procesos de negocio) e Inmon es top-down (arquitectura empresarial)",
+                    "Kimball es para empresas grandes e Inmon para pequeñas",
+                    "No hay diferencias significativas"
+                ],
+                answer: "Kimball es bottom-up (orientado a procesos de negocio) e Inmon es top-down (arquitectura empresarial)",
+                feedback: "Correcto. Kimball propone desarrollo incremental por data marts (bottom-up) mientras Inmon propone un EDW central primero (top-down)."
+            },
+            {
+                question: "¿Qué modelo de datos utiliza principalmente la metodología de Kimball?",
+                options: [
+                    "Relacional normalizado",
+                    "Dimensional (esquema estrella/copo de nieve)",
+                    "Orientado a objetos",
+                    "Jerárquico"
+                ],
+                answer: "Dimensional (esquema estrella/copo de nieve)",
+                feedback: "Correcto. Kimball es conocido por el modelado dimensional que utiliza esquemas estrella y copo de nieve, optimizados para consultas analíticas."
+            },
+            {
+                question: "¿Cuál es el criterio con MAYOR peso en la selección de una herramienta BI?",
+                options: [
+                    "Costo Total de Propiedad (TCO)",
+                    "Facilidad de uso",
+                    "Capacidades de Machine Learning",
+                    "Soporte y comunidad"
+                ],
+                answer: "Facilidad de uso",
+                feedback: "Correcto. La facilidad de uso tiene un peso del 25%, siendo el criterio más importante en la selección de tecnología BI."
+            },
+            {
+                question: "¿Qué plataforma BI está más integrada con el ecosistema Microsoft?",
+                options: [
+                    "Tableau",
+                    "Qlik Sense",
+                    "Power BI",
+                    "Looker"
+                ],
+                answer: "Power BI",
+                feedback: "Correcto. Power BI es el producto de Microsoft y ofrece integración nativa con Microsoft 365, Azure y todo el ecosistema Microsoft."
+            },
+            {
+                question: "En un dashboard CFO, ¿qué significa EBITDA?",
+                options: [
+                    "Earnings Before Interest, Taxes, Depreciation and Amortization",
+                    "Electronic Business Intelligence Data Analysis",
+                    "Enterprise Budget In Total Digital Assets",
+                    "Estimated Balance In The Database Application"
+                ],
+                answer: "Earnings Before Interest, Taxes, Depreciation and Amortization",
+                feedback: "Correcto. EBITDA es una métrica financiera clave que mide el beneficio operativo antes de deducciones contables y financieras."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizQuestionArea = document.getElementById('quizQuestionArea');
+        const quizResultsArea = document.getElementById('quizResults');
+        const quizQuestionEl = document.getElementById('quizQuestion');
+        const quizOptionsEl = document.getElementById('quizOptions');
+        const quizFeedbackEl = document.getElementById('quizFeedback');
+        const nextBtn = document.getElementById('nextBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const progressBar = document.getElementById('progressBar');
+        const questionNumberEl = document.getElementById('questionNumber');
+        const quizScoreEl = document.getElementById('quizScore');
+        const quizResultMessageEl = document.getElementById('quizResultMessage');
+
+        function loadQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            if (quizQuestionArea) quizQuestionArea.style.display = 'block';
+            if (quizResultsArea) quizResultsArea.style.display = 'none';
+            if (progressBar) progressBar.style.width = '0%';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (!quizData || currentQuestionIndex >= quizData.length || !quizQuestionEl) return;
+            
+            if (quizFeedbackEl) quizFeedbackEl.innerHTML = '';
+            if (nextBtn) nextBtn.style.display = 'none';
+            
+            const progressPercent = (currentQuestionIndex / quizData.length) * 100;
+            if (progressBar) progressBar.style.width = progressPercent + '%';
+            
+            const currentQuestion = quizData[currentQuestionIndex];
+            if (questionNumberEl) questionNumberEl.textContent = `Pregunta ${currentQuestionIndex + 1} de ${quizData.length}`;
+            quizQuestionEl.innerHTML = currentQuestion.question;
+            
+            if (quizOptionsEl) quizOptionsEl.innerHTML = '';
+            currentQuestion.options.forEach(optionText => {
+                const button = document.createElement('button');
+                button.textContent = optionText;
+                button.classList.add('option-btn');
+                button.setAttribute('type', 'button');
+                button.addEventListener('click', () => checkAnswer(optionText, currentQuestion.answer, currentQuestion.feedback, button));
+                if (quizOptionsEl) quizOptionsEl.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption, correctAnswer, feedback, selectedButton) {
+            const optionButtons = quizOptionsEl.querySelectorAll('.option-btn');
+            optionButtons.forEach(btn => btn.disabled = true);
+
+            if (selectedOption === correctAnswer) {
+                score++;
+                selectedButton.classList.add('correct');
+                if (quizFeedbackEl) {
+                    quizFeedbackEl.innerHTML = `<i class="fa-solid fa-check-circle" style="color: #28a745;"></i> ${feedback}`;
+                    quizFeedbackEl.style.backgroundColor = '#d4edda';
+                    quizFeedbackEl.style.color = '#155724';
+                    quizFeedbackEl.style.borderLeft = '4px solid #28a745';
+                }
+            } else {
+                selectedButton.classList.add('wrong');
+                if (quizFeedbackEl) {
+                    quizFeedbackEl.innerHTML = `<i class="fa-solid fa-times-circle" style="color: #dc3545;"></i> Incorrecto. ${feedback}`;
+                    quizFeedbackEl.style.backgroundColor = '#f8d7da';
+                    quizFeedbackEl.style.color = '#721c24';
+                    quizFeedbackEl.style.borderLeft = '4px solid #dc3545';
+                }
+                optionButtons.forEach(btn => {
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+            
+            const progressPercent = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            if (progressBar) progressBar.style.width = progressPercent + '%';
+            
+            if (nextBtn) nextBtn.style.display = 'block';
+        }
+
+        function showResults() {
+            if (quizQuestionArea) quizQuestionArea.style.display = 'none';
+            if (quizFeedbackEl) quizFeedbackEl.innerHTML = '';
+            if (nextBtn) nextBtn.style.display = 'none';
+            
+            if (quizResultsArea) quizResultsArea.style.display = 'block';
+            if (quizScoreEl) quizScoreEl.textContent = `Tu puntaje: ${score} de ${quizData.length}`;
+            
+            let message = "";
+            const percentage = (score / quizData.length) * 100;
+            if (percentage === 100) message = "🎉 ¡Excelente! Tienes un dominio completo del tema.";
+            else if (percentage >= 80) message = "👍 ¡Muy bien! Has comprendido la mayoría de los conceptos.";
+            else if (percentage >= 60) message = "📚 ¡Buen trabajo! Te recomendamos repasar algunos temas.";
+            else message = "📖 Sigue estudiando. Repasa el material y vuelve a intentarlo.";
+            
+            if (quizResultMessageEl) quizResultMessageEl.textContent = message;
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            });
+        }
+        
+        if (restartBtn) restartBtn.addEventListener('click', loadQuiz);
+        
+        // Cargar quiz si el contenedor existe
+        if (document.getElementById('quiz-container')) loadQuiz();
+
+        // --- 4. Inicializar Gráficos Chart.js ---
+        const ctxBeneficios = document.getElementById('beneficiosChart');
+        if (ctxBeneficios) {
+            new Chart(ctxBeneficios, {
+                type: 'bar',
+                data: {
+                    labels: ['ROI (3 años)', 'Reducción T. Reportes', 'Mejora Pronósticos', 'Satisfacción Cliente', 'Reducción Costos'],
+                    datasets: [{
+                        label: 'Mejora Promedio (%)',
+                        data: [350, 70, 37.5, 27.5, 20],
+                        backgroundColor: ['#198754', '#0d6efd', '#ffc107', '#0dcaf0', '#dc3545'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Beneficios Cuantificables de BI',
+                            font: { size: 18 }
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => value + '%'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        const ctxTecnologia = document.getElementById('tecnologiaChart');
+        if (ctxTecnologia) {
+            new Chart(ctxTecnologia, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Facilidad de uso (25%)', 'Escalabilidad (20%)', 'Integración (20%)', 'Costo TCO (15%)', 'Soporte (10%)', 'Capacidades (10%)'],
+                    datasets: [{
+                        label: 'Peso',
+                        data: [25, 20, 20, 15, 10, 10],
+                        backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#0dcaf0', '#6c757d'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Criterios de Selección de Tecnología BI',
+                            font: { size: 18 }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        const ctxCFO = document.getElementById('cfoChart');
+        if (ctxCFO) {
+            new Chart(ctxCFO, {
+                type: 'bar',
+                data: {
+                    labels: ['Revenue', 'COGS', 'OPEX', 'EBITDA'],
+                    datasets: [
+                        {
+                            label: 'Actual ($M)',
+                            data: [5.2, 2.1, 2.5, 0.6],
+                            backgroundColor: 'rgba(13, 110, 253, 0.7)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Budget ($M)',
+                            data: [5.0, 2.0, 2.4, 0.6],
+                            backgroundColor: 'rgba(108, 117, 125, 0.7)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Dashboard CFO: Actual vs. Budget',
+                            font: { size: 18 }
+                        },
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => '$' + value + 'M'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- 5. Navegación Suave y Activa ---
+        navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+                navLinks.forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        const scrollSections = document.querySelectorAll('section[id]');
+        const onScroll = () => {
+            let currentSection = '';
+            const scrollY = window.scrollY;
+            scrollSections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+            if (!currentSection && scrollY < 500) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                const bienvenidaLink = document.querySelector('.main-nav a[href="#bienvenida"]');
+                if (bienvenidaLink) bienvenidaLink.classList.add('active');
+            }
+        };
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+    </script>
+</body>
+</html>
